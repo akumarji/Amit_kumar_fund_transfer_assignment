@@ -1,0 +1,476 @@
+{
+    "openapi": "3.0.1",
+    "info": {
+        "title": "Fund transfer API",
+        "description": "This API expose endpoints to manage fund transfer with exchange rate.",
+        "contact": {
+            "name": "Amit Kumar",
+            "email": "jindal.amit47@gmail.com"
+        },
+        "version": "1.0"
+    },
+    "servers": [
+        {
+            "url": "http://localhost:8080",
+            "description": "Fund transfer app"
+        }
+    ],
+    "paths": {
+        "/api/transactions": {
+            "post": {
+                "tags": [
+                    "transaction-controller"
+                ],
+                "summary": "API to create transaction",
+                "description": "Create transaction with exchange rate",
+                "operationId": "transferMoney",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/TransferRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    },
+                    "400": {
+                        "description": "Account Not Found"
+                    },
+                    "500": {
+                        "description": "Exchange Rate Not Found"
+                    }
+                }
+            }
+        },
+        "/api/accounts/{accountId}": {
+            "get": {
+                "tags": [
+                    "account-controller"
+                ],
+                "summary": "API to fetch account details",
+                "description": "Fetching account details based on accountId",
+                "operationId": "getAccountDetails",
+                "parameters": [
+                    {
+                        "name": "accountId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/AccountResponseDto"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Account Not Found",
+                        "content": {
+                            "application/json": {}
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {}
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "AccountRequestDto": {
+                "required": [
+                    "accountId",
+                    "currency"
+                ],
+                "type": "object",
+                "properties": {
+                    "accountId": {
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "currency": {
+                        "type": "string",
+                        "enum": [
+                            "INR",
+                            "EUR",
+                            "USD",
+                            "AED",
+                            "AFN",
+                            "ALL",
+                            "AMD",
+                            "ANG",
+                            "AOA",
+                            "ARS",
+                            "AUD",
+                            "AWG",
+                            "AZN",
+                            "BAM",
+                            "BBD",
+                            "BDT",
+                            "BGN",
+                            "BHD",
+                            "BIF",
+                            "BMD",
+                            "BND",
+                            "BOB",
+                            "BRL",
+                            "BSD",
+                            "BTN",
+                            "BWP",
+                            "BYN",
+                            "BZD",
+                            "CAD",
+                            "CDF",
+                            "CHF",
+                            "CLP",
+                            "CNY",
+                            "COP",
+                            "CRC",
+                            "CUP",
+                            "CVE",
+                            "CZK",
+                            "DJF",
+                            "DKK",
+                            "DOP",
+                            "DZD",
+                            "EGP",
+                            "ERN",
+                            "ETB",
+                            "FJD",
+                            "FKP",
+                            "FOK",
+                            "GBP",
+                            "GEL",
+                            "GGP",
+                            "GHS",
+                            "GIP",
+                            "GMD",
+                            "GNF",
+                            "GTQ",
+                            "GYD",
+                            "HKD",
+                            "HNL",
+                            "HRK",
+                            "HTG",
+                            "IDR",
+                            "ILS",
+                            "IMP",
+                            "IQD",
+                            "IRR",
+                            "ISK",
+                            "JEP",
+                            "JMD",
+                            "JOD",
+                            "JPY",
+                            "KES",
+                            "KGS",
+                            "KHR",
+                            "KID",
+                            "KMF",
+                            "KRW",
+                            "KWD",
+                            "KYD",
+                            "KZT",
+                            "LAK",
+                            "LBP",
+                            "LKR",
+                            "LRD",
+                            "LSL",
+                            "LYD",
+                            "MAD",
+                            "MDL",
+                            "MGA",
+                            "MKD",
+                            "MMK",
+                            "MNT",
+                            "MOP",
+                            "MRU",
+                            "MUR",
+                            "MVR",
+                            "MWK",
+                            "MXN",
+                            "MYR",
+                            "MZN",
+                            "NAD",
+                            "NGN",
+                            "NIO",
+                            "NOK",
+                            "NPR",
+                            "NZD",
+                            "OMR",
+                            "PAB",
+                            "PEN",
+                            "PGK",
+                            "PHP",
+                            "PKR",
+                            "PLN",
+                            "PYG",
+                            "QAR",
+                            "RON",
+                            "RSD",
+                            "RUB",
+                            "RWF",
+                            "SAR",
+                            "SBD",
+                            "SCR",
+                            "SDG",
+                            "SEK",
+                            "SGD",
+                            "SHP",
+                            "SLE",
+                            "SLL",
+                            "SOS",
+                            "SRD",
+                            "SSP",
+                            "STN",
+                            "SYP",
+                            "SZL",
+                            "THB",
+                            "TJS",
+                            "TMT",
+                            "TND",
+                            "TOP",
+                            "TRY",
+                            "TTD",
+                            "TVD",
+                            "TWD",
+                            "TZS",
+                            "UAH",
+                            "UGX",
+                            "UYU",
+                            "UZS",
+                            "VES",
+                            "VND",
+                            "VUV",
+                            "WST",
+                            "XAF",
+                            "XCD",
+                            "XDR",
+                            "XOF",
+                            "XPF",
+                            "YER",
+                            "ZAR",
+                            "ZMW",
+                            "ZWL"
+                        ]
+                    }
+                }
+            },
+            "TransferRequest": {
+                "required": [
+                    "accountFrom",
+                    "accountTo",
+                    "amount"
+                ],
+                "type": "object",
+                "properties": {
+                    "accountFrom": {
+                        "$ref": "#/components/schemas/AccountRequestDto"
+                    },
+                    "accountTo": {
+                        "$ref": "#/components/schemas/AccountRequestDto"
+                    },
+                    "amount": {
+                        "type": "number"
+                    }
+                }
+            },
+            "AccountResponseDto": {
+                "type": "object",
+                "properties": {
+                    "accountId": {
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "currency": {
+                        "type": "string",
+                        "enum": [
+                            "INR",
+                            "EUR",
+                            "USD",
+                            "AED",
+                            "AFN",
+                            "ALL",
+                            "AMD",
+                            "ANG",
+                            "AOA",
+                            "ARS",
+                            "AUD",
+                            "AWG",
+                            "AZN",
+                            "BAM",
+                            "BBD",
+                            "BDT",
+                            "BGN",
+                            "BHD",
+                            "BIF",
+                            "BMD",
+                            "BND",
+                            "BOB",
+                            "BRL",
+                            "BSD",
+                            "BTN",
+                            "BWP",
+                            "BYN",
+                            "BZD",
+                            "CAD",
+                            "CDF",
+                            "CHF",
+                            "CLP",
+                            "CNY",
+                            "COP",
+                            "CRC",
+                            "CUP",
+                            "CVE",
+                            "CZK",
+                            "DJF",
+                            "DKK",
+                            "DOP",
+                            "DZD",
+                            "EGP",
+                            "ERN",
+                            "ETB",
+                            "FJD",
+                            "FKP",
+                            "FOK",
+                            "GBP",
+                            "GEL",
+                            "GGP",
+                            "GHS",
+                            "GIP",
+                            "GMD",
+                            "GNF",
+                            "GTQ",
+                            "GYD",
+                            "HKD",
+                            "HNL",
+                            "HRK",
+                            "HTG",
+                            "IDR",
+                            "ILS",
+                            "IMP",
+                            "IQD",
+                            "IRR",
+                            "ISK",
+                            "JEP",
+                            "JMD",
+                            "JOD",
+                            "JPY",
+                            "KES",
+                            "KGS",
+                            "KHR",
+                            "KID",
+                            "KMF",
+                            "KRW",
+                            "KWD",
+                            "KYD",
+                            "KZT",
+                            "LAK",
+                            "LBP",
+                            "LKR",
+                            "LRD",
+                            "LSL",
+                            "LYD",
+                            "MAD",
+                            "MDL",
+                            "MGA",
+                            "MKD",
+                            "MMK",
+                            "MNT",
+                            "MOP",
+                            "MRU",
+                            "MUR",
+                            "MVR",
+                            "MWK",
+                            "MXN",
+                            "MYR",
+                            "MZN",
+                            "NAD",
+                            "NGN",
+                            "NIO",
+                            "NOK",
+                            "NPR",
+                            "NZD",
+                            "OMR",
+                            "PAB",
+                            "PEN",
+                            "PGK",
+                            "PHP",
+                            "PKR",
+                            "PLN",
+                            "PYG",
+                            "QAR",
+                            "RON",
+                            "RSD",
+                            "RUB",
+                            "RWF",
+                            "SAR",
+                            "SBD",
+                            "SCR",
+                            "SDG",
+                            "SEK",
+                            "SGD",
+                            "SHP",
+                            "SLE",
+                            "SLL",
+                            "SOS",
+                            "SRD",
+                            "SSP",
+                            "STN",
+                            "SYP",
+                            "SZL",
+                            "THB",
+                            "TJS",
+                            "TMT",
+                            "TND",
+                            "TOP",
+                            "TRY",
+                            "TTD",
+                            "TVD",
+                            "TWD",
+                            "TZS",
+                            "UAH",
+                            "UGX",
+                            "UYU",
+                            "UZS",
+                            "VES",
+                            "VND",
+                            "VUV",
+                            "WST",
+                            "XAF",
+                            "XCD",
+                            "XDR",
+                            "XOF",
+                            "XPF",
+                            "YER",
+                            "ZAR",
+                            "ZMW",
+                            "ZWL"
+                        ]
+                    },
+                    "balance": {
+                        "type": "number"
+                    }
+                }
+            }
+        }
+    }
+}
