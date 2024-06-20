@@ -29,7 +29,7 @@ This application is for demo only. It provides APIs for following 2 features
   ### Basic API Information
 | Method | Path | Usage |
 | --- | --- | --- |
-| GET | /api/accounts/{accountId}/balances | retrieve account details |
+| GET | /api/accounts/{accountId} | retrieve account details |
 | POST | /api/transactions | create transfer transaction |
 
 
